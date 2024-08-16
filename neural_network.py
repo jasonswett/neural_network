@@ -7,13 +7,15 @@ def sigmoid(x):
 def sigmoid_derivative(x):
     return x * (1 - x)
 
-# Initialize parameters
-input_size, hidden_size, output_size = 2, 2, 1
+input_layer_neuron_count = 2
+hidden_layer_neuron_count = 2
+output_layer_neuron_count = 1
+
 np.random.seed(0)
-weights1 = np.random.uniform(size=(input_size, hidden_size))
-weights2 = np.random.uniform(size=(hidden_size, output_size))
-bias1 = np.random.uniform(size=(1, hidden_size))
-bias2 = np.random.uniform(size=(1, output_size))
+weights1 = np.random.uniform(size=(input_layer_neuron_count, hidden_layer_neuron_count))
+weights2 = np.random.uniform(size=(hidden_layer_neuron_count, output_layer_neuron_count))
+bias1 = np.random.uniform(size=(1, hidden_layer_neuron_count))
+bias2 = np.random.uniform(size=(1, output_layer_neuron_count))
 
 # Training data for XOR
 input_data = np.array([[0,0], [0,1], [1,0], [1,1]])
