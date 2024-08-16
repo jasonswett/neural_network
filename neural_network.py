@@ -21,7 +21,7 @@ Y = np.array([[0], [1], [1], [0]])
 
 # Training loop
 epochs = 10000
-lr = 0.1
+learning_rate = 0.1
 
 for epoch in range(epochs):
     # Forward propagation
@@ -41,15 +41,16 @@ for epoch in range(epochs):
     d_hidden_layer = error_hidden_layer * sigmoid_derivative(hidden_layer_output)
     
     # Update weights and biases
-    weights2 += hidden_layer_output.T.dot(d_predicted_output) * lr
-    bias2 += np.sum(d_predicted_output, axis=0, keepdims=True) * lr
-    weights1 += X.T.dot(d_hidden_layer) * lr
-    bias1 += np.sum(d_hidden_layer, axis=0, keepdims=True) * lr
+    weights2 += hidden_layer_output.T.dot(d_predicted_output) * learning_rate
+    bias2 += np.sum(d_predicted_output, axis=0, keepdims=True) * learning_rate
+    weights1 += X.T.dot(d_hidden_layer) * learning_rate
+    bias1 += np.sum(d_hidden_layer, axis=0, keepdims=True) * learning_rate
 
     # Print loss every 1000 epochs
     if epoch % 1000 == 0:
         print(f"Epoch {epoch} Loss {loss}")
 
+print()
 print("Final weights and biases:")
 print("Weights1:", weights1)
 print("Bias1:", bias1)
@@ -65,6 +66,7 @@ def predict(X, weights1, bias1, weights2, bias2):
     return predicted_output
 
 test_inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+print()
 
 # Predict and print the output for test inputs
 for test_input in test_inputs:
