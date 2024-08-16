@@ -16,8 +16,8 @@ bias1 = np.random.uniform(size=(1, hidden_size))
 bias2 = np.random.uniform(size=(1, output_size))
 
 # Training data for XOR
-X = np.array([[0,0], [0,1], [1,0], [1,1]])
-Y = np.array([[0], [1], [1], [0]])
+input_data = np.array([[0,0], [0,1], [1,0], [1,1]])
+target_output = np.array([[0], [1], [1], [0]])
 
 # Training loop
 epochs = 10000
@@ -25,16 +25,16 @@ learning_rate = 0.1
 
 for epoch in range(epochs):
     # Forward propagation
-    hidden_layer_input = np.dot(X, weights1) + bias1
+    hidden_layer_input = np.dot(input_data, weights1) + bias1
     hidden_layer_output = sigmoid(hidden_layer_input)
     output_layer_input = np.dot(hidden_layer_output, weights2) + bias2
     predicted_output = sigmoid(output_layer_input)
     
     # Calculate loss (Mean Squared Error)
-    loss = np.mean((Y - predicted_output) ** 2)
+    loss = np.mean((target_output - predicted_output) ** 2)
     
     # Backpropagation
-    error = Y - predicted_output
+    error = target_output - predicted_output
     d_predicted_output = error * sigmoid_derivative(predicted_output)
     
     error_hidden_layer = d_predicted_output.dot(weights2.T)
@@ -43,7 +43,7 @@ for epoch in range(epochs):
     # Update weights and biases
     weights2 += hidden_layer_output.T.dot(d_predicted_output) * learning_rate
     bias2 += np.sum(d_predicted_output, axis=0, keepdims=True) * learning_rate
-    weights1 += X.T.dot(d_hidden_layer) * learning_rate
+    weights1 += input_data.T.dot(d_hidden_layer) * learning_rate
     bias1 += np.sum(d_hidden_layer, axis=0, keepdims=True) * learning_rate
 
     # Print loss every 1000 epochs
@@ -57,9 +57,9 @@ print("Bias1:", bias1)
 print("Weights2:", weights2)
 print("Bias2:", bias2)
 
-def predict(X, weights1, bias1, weights2, bias2):
+def predict(input_data, weights1, bias1, weights2, bias2):
     # Forward propagation
-    hidden_layer_input = np.dot(X, weights1) + bias1
+    hidden_layer_input = np.dot(input_data, weights1) + bias1
     hidden_layer_output = sigmoid(hidden_layer_input)
     output_layer_input = np.dot(hidden_layer_output, weights2) + bias2
     predicted_output = sigmoid(output_layer_input)
